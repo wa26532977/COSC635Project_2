@@ -47,12 +47,15 @@ if __name__ == '__main__':
     with open("DataSent.txt", "r", encoding="utf8") as in_file:
         bytes = in_file.read(300)  # read 5000 bytes
         while bytes:
-            with open("split_into_small/out-file-" + str(i), 'w', encoding="utf8") as output:
-                msg = bytes.encode('UTF-8')
-                client_1 = ClientServer(pocket_lost, msg, '127.0.0.1', 5005)
-                client_1.client_sent()
-            bytes = in_file.read(3000)  # read another 5000 bytes
-            i += 1
+            if i < 5:
+                with open("split_into_small/out-file-" + str(i), 'w', encoding="utf8") as output:
+                    print(bytes)
+                    print(f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~Part: {i}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                    msg = bytes.encode('UTF-8')
+                    client_1 = ClientServer(pocket_lost, msg, '127.0.0.1', 5005)
+                    client_1.client_sent()
+                bytes = in_file.read(3000)  # read another 5000 bytes
+                i += 1
         client_1.close_socket()
 
 
