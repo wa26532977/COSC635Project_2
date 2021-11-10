@@ -1,5 +1,4 @@
 import socket
-import numpy as np
 
 
 class Receiver:

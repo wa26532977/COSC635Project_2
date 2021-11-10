@@ -1,7 +1,8 @@
 import socket
-import numpy as np
 import time
 from random import randrange
+import sys
+import math
 
 
 class ClientServer:
@@ -19,22 +20,29 @@ class ClientServer:
         random_number = randrange(99)
         print(f"pocket_lost: {self.pocket_lost} and random number is {random_number}")
         print(random_number)
+        # create fake pack lost
         if random_number > int(self.pocket_lost):
             self.client_socket.sendto(self.msg, (self.addr, self.port))
-        try:
-            time.sleep(1)
-            data, addr = self.client_socket.recvfrom(4096)
-            print(f'Server Says: {str(data)}')
-            self.pack_number = data.decode('UTF-8')
-        except:
-            print("bad connection")
-            self.connection_fail += 1
-            print(f"connection fail {self.connection_fail}")
-            time.sleep(1)
-            self.client_sent(good_pack_number)
 
-        if good_pack_number != self.pack_number:
-            self.client_sent(good_pack_number)
+        start_timer = time.time()
+        # wait for receiver ack
+        while time.time() - start_timer < 3:
+            try:
+                data, addr = self.client_socket.recvfrom(4096)
+                print(f'Server Says: {str(data)}')
+                self.pack_number = data.decode('UTF-8')
+                # matching pack number
+                if good_pack_number != self.pack_number:
+                    self.client_sent(good_pack_number)
+                return
+            except:
+                time.sleep(0.5)
+                print("waiting....")
+
+        print("bad connection")
+        self.connection_fail += 1
+        print(f"connection fail {self.connection_fail}")
+        self.client_sent(good_pack_number)
 
     def close_socket(self):
         self.client_socket.close()
@@ -50,7 +58,9 @@ if __name__ == '__main__':
                 break
         except:
             print(f"{pocket_lost} is not a number between 0-99")
-    #
+    # find binary size of the txt file
+    file = open("DataSent.txt", "r", encoding="utf8")
+    total_pack = int(math.ceil(sys.getsizeof(file.read()) / 300))
 
     total_pack_lost = 0
     i = 0
@@ -58,13 +68,10 @@ if __name__ == '__main__':
         bytes = in_file.read(3000)  # read 5000 bytes
         while bytes:
             if i < 5:
-                with open("split_into_small/out-file-" + str(i), 'w', encoding="utf8") as output:
-                    # print(bytes)
-                    # print(f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~Part: {i}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-                    msg = bytes.encode('UTF-8')
-                    client_1 = ClientServer(pocket_lost, f"part_{i},".encode('UTF-8')+msg, '127.0.0.1', 5005)
-                    client_1.client_sent(f"part_{i}")
-                    total_pack_lost += client_1.connection_fail
+                msg = bytes.encode('UTF-8')
+                client_1 = ClientServer(pocket_lost, f"part_{i}, total_pack: {total_pack},".encode('UTF-8')+msg, '127.0.0.1', 5005)
+                client_1.client_sent(f"part_{i}")
+                total_pack_lost += client_1.connection_fail
                 bytes = in_file.read(3000)  # read another 5000 bytes
                 i += 1
             else:
