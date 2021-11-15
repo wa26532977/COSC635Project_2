@@ -60,12 +60,12 @@ if __name__ == '__main__':
         except:
             print(f"{pocket_lost} is not a number between 0-99")
     # find binary size of the txt file
-    file = open("DataSent.txt", "r", encoding="utf8")
+    file = open("COSC635_P2_DataSent.txt", "r", encoding="utf8")
     total_pack = int(math.ceil(sys.getsizeof(file.read()) / pack_size))
 
     total_pack_lost = 0
     i = 1
-    with open("DataSent.txt", "r", encoding="utf8") as in_file:
+    with open("COSC635_P2_DataSent.txt", "r", encoding="utf8") as in_file:
         bytes = in_file.read(pack_size)  # read 5000 bytes
         while bytes:
             msg_pickle = pickle.dumps({"part": i, "total_pack": total_pack, "msg": bytes})
@@ -75,7 +75,11 @@ if __name__ == '__main__':
             bytes = in_file.read(pack_size)  # read another 5000 bytes
             i += 1
         client_1.close_socket()
-    print(f"The pack was lost this name times {total_pack_lost}.")
+    print("Summery:")
+    print(f"Total package send: {total_pack}")
+    print(f"Each package size: {pack_size} bytes")
+    print(f"Package Lost rate: {pocket_lost}%")
+    print(f"The pack was lost: {total_pack_lost} times .")
 
 
 

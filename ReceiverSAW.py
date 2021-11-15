@@ -20,7 +20,7 @@ class Receiver:
             self.sock.sendto(message, addr)
             if pack_data['part'] == pack_data['total_pack']:
                 stop_listen = True
-                text_file = open('Output.txt', 'w')
+                text_file = open('COSC635_P2_DataReceived.txt', 'w')
                 text_file.write(self.total_msg)
                 text_file.close()
 
