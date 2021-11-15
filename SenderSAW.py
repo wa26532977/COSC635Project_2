@@ -3,6 +3,7 @@ import time
 from random import randrange
 import sys
 import math
+import pickle
 
 
 class ClientServer:
@@ -50,7 +51,7 @@ class ClientServer:
 
 # this for testing
 if __name__ == '__main__':
-
+    pack_size = 3000
     while True:
         pocket_lost = input("Please enter pocket_lost number between 0-99:")
         try:
@@ -60,22 +61,19 @@ if __name__ == '__main__':
             print(f"{pocket_lost} is not a number between 0-99")
     # find binary size of the txt file
     file = open("DataSent.txt", "r", encoding="utf8")
-    total_pack = int(math.ceil(sys.getsizeof(file.read()) / 300))
+    total_pack = int(math.ceil(sys.getsizeof(file.read()) / pack_size))
 
     total_pack_lost = 0
-    i = 0
+    i = 1
     with open("DataSent.txt", "r", encoding="utf8") as in_file:
-        bytes = in_file.read(3000)  # read 5000 bytes
+        bytes = in_file.read(pack_size)  # read 5000 bytes
         while bytes:
-            if i < 5:
-                msg = bytes.encode('UTF-8')
-                client_1 = ClientServer(pocket_lost, f"part_{i}, total_pack: {total_pack},".encode('UTF-8')+msg, '127.0.0.1', 5005)
-                client_1.client_sent(f"part_{i}")
-                total_pack_lost += client_1.connection_fail
-                bytes = in_file.read(3000)  # read another 5000 bytes
-                i += 1
-            else:
-                break
+            msg_pickle = pickle.dumps({"part": i, "total_pack": total_pack, "msg": bytes})
+            client_1 = ClientServer(pocket_lost, msg_pickle, '127.0.0.1', 5005)
+            client_1.client_sent(f"part: {i}")
+            total_pack_lost += client_1.connection_fail
+            bytes = in_file.read(pack_size)  # read another 5000 bytes
+            i += 1
         client_1.close_socket()
     print(f"The pack was lost this name times {total_pack_lost}.")
 
