@@ -65,14 +65,14 @@ if __name__ == '__main__':
     total_pack_lost = 0
     i = 0
     with open("DataSent.txt", "r", encoding="utf8") as in_file:
-        bytes = in_file.read(3000)  # read 5000 bytes
+        bytes = in_file.read(300)  # read 5000 bytes
         while bytes:
             if i < 5:
                 msg = bytes.encode('UTF-8')
                 client_1 = ClientServer(pocket_lost, f"part_{i}, total_pack: {total_pack},".encode('UTF-8')+msg, '127.0.0.1', 5005)
                 client_1.client_sent(f"part_{i}")
                 total_pack_lost += client_1.connection_fail
-                bytes = in_file.read(3000)  # read another 5000 bytes
+                bytes = in_file.read(300)  # read another 5000 bytes
                 i += 1
             else:
                 break
