@@ -44,7 +44,7 @@ class ClientServer:
                 return
             self.client_sent_group_pack()
             return
-
+        # dont have out of orde by len of ack_list is short
         elif len(self.ack_list) < (self.ack_pack_number + self.window_size) and not out_of_order:
             self.ack_pack_number = len(self.ack_list)
             self.connection_fail += 1
@@ -88,11 +88,6 @@ class ClientServer:
         print(f"ack list: {self.ack_list}")
         self.check_group_response()
         # all package send
-
-
-    def client_sent_go_back_n(self):
-        self.client_sent_group_pack()
-        pass
 
     # def client_sent(self, msg, good_pack_number):
     #     random_number = randrange(99)
