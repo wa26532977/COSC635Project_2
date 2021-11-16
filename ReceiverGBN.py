@@ -16,13 +16,15 @@ class Receiver:
             data, addr = self.sock.recvfrom(4096)
             pack_data = pickle.loads(data)
             print(pack_data["part"], pack_data["total_pack"])
-            if pack_data["part"] == self.package_number:
+            print(int(pack_data["part"]) == self.package_number)
+            if int(pack_data["part"]) == self.package_number:
                 self.total_msg += pack_data['msg']
-                message = f'part: {pack_data["part"]}'.encode('UTF-8')
+                message = pickle.dumps(f'part: {pack_data["part"]}')
                 self.sock.sendto(message, addr)
                 self.package_number += 1
             else:
-                message = f"out of order last part received: {self.package_number}".encode('UTF-8')
+                message = pickle.dumps(f"out of order should sent part: {self.package_number}")
+                print(f"last part received {self.package_number}")
                 self.sock.sendto(message, addr)
 
             if pack_data['part'] == pack_data['total_pack']:
@@ -33,7 +35,7 @@ class Receiver:
 
 
 if __name__ == '__main__':
-    receiver_1 = Receiver("127.0.0.1", 5005)
+    receiver_1 = Receiver("127.0.0.1", 5010)
     receiver_1.start_listening()
 
 

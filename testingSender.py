@@ -48,9 +48,15 @@ print(msg)
 # msg = 'good'
 #
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.sendto(msg, ("127.0.0.1", 5006))
-data, addr = s.recvfrom(500)
-print(str(data))
+# s.sendto(msg, ("127.0.0.1", 5006))
+# data, addr = s.recvfrom(500)
+# print(str(data))
+
+while True:
+    s.sendto(msg, ("127.0.0.1", 5006))
+    data, addr = s.recvfrom(500)
+    print(str(data))
+
 
 
 
