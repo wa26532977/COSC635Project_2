@@ -39,9 +39,6 @@ class ClientServer:
         if len(self.ack_list) == (self.ack_pack_number + self.window_size) and not out_of_order:
             print("good one")
             self.ack_pack_number = len(self.ack_list)
-            # all package send
-            if len(self.ack_list) + self.window_size == self.total_pack_number:
-                return
             self.client_sent_group_pack()
             return
         # dont have out of orde by len of ack_list is short
@@ -68,6 +65,8 @@ class ClientServer:
         # this is for last pack if pack size is smaller then window size
         if len(self.ack_list) + self.window_size > self.total_pack_number:
             self.window_size = self.total_pack_number - len(self.ack_list)
+            if self.window_size == 0:
+                return
             print(f"new window size {self.window_size}")
             print(f"len ack_list: {self.ack_list} ")
 
@@ -75,7 +74,7 @@ class ClientServer:
             print(f"n: {self.ack_pack_number + n}")
             if self.pocket_sent():
                 msg = self.all_msg[self.ack_pack_number + n]
-                print(pickle.loads(msg))
+                # print(pickle.loads(msg))
                 self.client_socket.sendto(msg, (self.addr, self.port))
 
             try:

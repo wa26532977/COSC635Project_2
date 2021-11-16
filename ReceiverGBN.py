@@ -27,7 +27,7 @@ class Receiver:
                 print(f"last part received {self.package_number}")
                 self.sock.sendto(message, addr)
 
-            if pack_data['part'] == pack_data['total_pack']:
+            if pack_data['part'] == pack_data['total_pack'] and self.package_number == int(pack_data['total_pack']) + 1:
                 stop_listen = True
                 text_file = open('COSC635_P2_DataReceived.txt', 'w')
                 text_file.write(self.total_msg)
