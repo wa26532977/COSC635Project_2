@@ -1,4 +1,4 @@
-aaNetwork Working Group                                         W. Stevens
+21Network Working Group                                         W. Stevens
 Request for Comments: 3542                                     M. Thomas
 Obsoletes: 2292                                               Consultant
 Category: Informational                                      E. Nordmark
@@ -112,7 +112,7 @@ Table of Contents
 
 Stevens, et al.              Informational                      [Page 2]
 
-RFC 3542             Advanced Sockets API for IPv6              May 23
+RFC 3542             Advanced Sockets API for IPv6              May 2003
 
 
         10.1  inet6_opt_init ...................................... 41
@@ -1677,16 +1677,16 @@ RFC 3542             Advanced Sockets API for IPv6              May 2003
       outgoing interface, and that the next hop should be a sockaddr_in6
       structure.
 
+ 
 
 
 
 
 
-
-
+   
    (which is always in the form "xn," where x can have the values 1, 2,
    4, or 8) and the total size of the data portion of the option.  These
-
+   
 
    functions below need to know the alignment of the end of the option
    (which is always in the form "xn," where x can have the values 1, 2,
@@ -3926,7 +3926,7 @@ RFC 3542             Advanced Sockets API for IPv6              May 2003
 
 19.  Acknowledgments
 
-
+ 
 
 
 
@@ -4691,7 +4691,7 @@ RFC 3542             Advanced Sockets API for IPv6              May 2003
 
 19.  Acknowledgments
 
-
+ 
 
 
 
@@ -4922,4 +4922,6 @@ Acknowledgement
    Internet Society.
 
 
-Stevens, et al.              Informational                     [Page 77]
+Stevens, et al.              Informational                     [Page ]
+
+21
