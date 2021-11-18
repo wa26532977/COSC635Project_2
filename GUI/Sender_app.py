@@ -14,8 +14,8 @@ class Sender(QDialog):
         super(Sender, self).__init__()
         uic.loadUi("Sender.ui", self)
         self.pushButton.clicked.connect(self.sent_pressed)
-        self.lineEdit_2.setText("192.168.10.166")
-        self.lineEdit.setText("5010")
+        # self.lineEdit_2.setText("192.168.10.166")
+        # self.lineEdit.setText("5010")
         self.pack_size = 0
         self.pocket_lost = 0
         self.window_size = 0
