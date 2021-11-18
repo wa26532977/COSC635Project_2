@@ -32,7 +32,7 @@ class ClientServer:
 
     def check_group_response(self):
         print(f"len ack_list: {len(self.ack_list)}")
-        print(f"two number +: {self.ack_pack_number + self.window_size}")
+        # print(f"two number +: {self.ack_pack_number + self.window_size}")
         # check if 'out of order was in self.ack_list
         out_of_order = any('out of order' in string for string in self.ack_list)
         # this mean all the data was successfully send
@@ -63,7 +63,6 @@ class ClientServer:
 
     def client_sent_group_pack(self):
         # this is for last pack if pack size is smaller then window size
-        print("print from client sent group pack")
         if len(self.ack_list) + self.window_size > self.total_pack_number:
             self.window_size = self.total_pack_number - len(self.ack_list)
             if self.window_size == 0:

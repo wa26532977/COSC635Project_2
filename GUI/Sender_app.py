@@ -5,7 +5,7 @@ import os
 import pickle
 import math
 import time
-import SenderGBN
+from GUI import SenderGBN
 
 
 class Sender(QDialog):
@@ -51,7 +51,7 @@ class Sender(QDialog):
         client_1.close_socket()
         msgbox = QtWidgets.QMessageBox(self)
         msgbox.setWindowTitle("Summary")
-        msgbox.setText(f"File transfer completed:"
+        msgbox.setText(f"File transfer completed:\n"
                        f"Total time used: {round(time.time() - start_time, 4)} seconds \n"
                        f"Total package: {total_pack} \n"
                        f"The pack was lost: {client_1.connection_fail - 1} times. \n"
