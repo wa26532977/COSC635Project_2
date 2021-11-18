@@ -11,7 +11,7 @@ class ClientServer:
         self.pocket_lost = pock_lost
         self.window_size = int(win_size)
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.client_socket.settimeout(0.5)
+        self.client_socket.settimeout(0.1)
         self.all_msg = all_massage
         self.ack_pack_number = 0
         self.ack_list = []
@@ -23,7 +23,7 @@ class ClientServer:
 
     def pocket_sent(self):
         random_number = randrange(99)
-        print(f"pocket_lost: {self.pocket_lost} and random number is {random_number}")
+        print(f"random number: {self.pocket_lost} and random number is {random_number}")
         if random_number > int(self.pocket_lost):
             print("pocket_send")
             return True
@@ -63,6 +63,7 @@ class ClientServer:
 
     def client_sent_group_pack(self):
         # this is for last pack if pack size is smaller then window size
+        print("print from client sent group pack")
         if len(self.ack_list) + self.window_size > self.total_pack_number:
             self.window_size = self.total_pack_number - len(self.ack_list)
             if self.window_size == 0:
@@ -154,21 +155,18 @@ if __name__ == '__main__':
             all_msg.append(msg_pickle)
             i += 1
     # initialize the connection
-    client_1 = ClientServer(pocket_lost, all_msg, window_size, '127.0.0.1', 5010)
+    # client_1 = ClientServer(pocket_lost, all_msg, window_size, '127.0.0.1', 5010)
+    client_1 = ClientServer(pocket_lost, all_msg, window_size, '192.168.10.166', 5010)
     client_1.client_sent_group_pack()
     client_1.close_socket()
 
     # client_1.close_socket()
     total_time_end = time.time()
     print("Summery:")
-    print(f"Total package send: {total_pack}")
-    print(f"Each package size: {pack_size} bytes")
+    print(f"Total package: {total_pack}")
     print(f"Package Lost rate: {pocket_lost}%")
+    print(f"The pack was lost: {client_1.connection_fail - 1} times .")
+    print(f"Each package size: {pack_size} bytes")
     print(f"Total time used: {total_time_end-total_time_start} seconds")
-    print(f"The pack was lost: {client_1.connection_fail} times .")
-
-
-
-
 
 
