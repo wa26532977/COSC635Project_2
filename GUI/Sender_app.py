@@ -49,8 +49,15 @@ class Sender(QDialog):
             self.pocket_lost, all_msg, self.window_size, self.lineEdit_2.text(), int(self.lineEdit.text()))
         client_1.client_sent_group_pack()
         client_1.close_socket()
-        print("summary: ")
-        print(f"Total time used: {time.time() - start_time} seconds")
+        msgbox = QtWidgets.QMessageBox(self)
+        msgbox.setWindowTitle("Summary")
+        msgbox.setText(f"File transfer completed:"
+                       f"Total time used: {round(time.time() - start_time, 4)} seconds \n"
+                       f"Total package: {total_pack} \n"
+                       f"The pack was lost: {client_1.connection_fail - 1} times. \n"
+                       f"Package Lost rate: {self.pocket_lost}%\n"
+                       f"Each package size: {self.pack_size} bytes")
+        msgbox.exec()
 
 
 if __name__ == '__main__':
