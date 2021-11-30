@@ -5,7 +5,7 @@ import os
 import pickle
 import math
 import time
-from GUI import SenderGBN
+import SenderGBN
 
 
 class Sender(QDialog):
