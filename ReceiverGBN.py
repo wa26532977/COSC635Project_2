@@ -32,6 +32,7 @@ class Receiver:
                 text_file = open(self.store_location + r'/COSC635_P2_DataReceived.txt', 'w')
                 text_file.write(self.total_msg)
                 text_file.close()
+                self.sock.close()
 
 
 if __name__ == '__main__':

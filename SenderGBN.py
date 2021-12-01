@@ -144,13 +144,13 @@ if __name__ == '__main__':
     all_msg = []
     # making all the data package along with part number and total pack number
     with open("COSC635_P2_DataSent.txt", "r", encoding="utf8") as in_file:
-        bytes = in_file.read(pack_size)  # read 5000 bytes
+        bytes = in_file.read(pack_size)  # read 3000 bytes
         while bytes:
             # print({"part": i, "total_pack": total_pack})
             msg_pickle = pickle.dumps({"part": i, "total_pack": total_pack, "msg": bytes})
             # client_1.client_sent(msg_pickle, f"part: {i}")
             # total_pack_lost += client_1.connection_fail
-            bytes = in_file.read(pack_size)  # read another 5000 bytes
+            bytes = in_file.read(pack_size)  # read another 3000 bytes
             all_msg.append(msg_pickle)
             i += 1
     # initialize the connection
