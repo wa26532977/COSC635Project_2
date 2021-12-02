@@ -1,9 +1,12 @@
 import socket
 import pickle
 
-
+'''
+Class receiver
+GBN Protocol
+'''
 class Receiver:
-
+    #Constructor
     def __init__(self, addr, port, store_location):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.sock.bind((addr, port))
@@ -11,6 +14,10 @@ class Receiver:
         self.package_number = 1
         self.store_location = store_location
 
+    '''
+    Starts Listening from socket
+    Receives, prints and saves packages into destination folder
+    '''
     def start_listening(self):
         stop_listen = False
         while not stop_listen:
@@ -37,5 +44,3 @@ class Receiver:
 if __name__ == '__main__':
     receiver_1 = Receiver("192.168.10.166", 5010, r"C:/Users/wangp.BTC/PycharmProjects/COSC635Project_2/GUI")
     receiver_1.start_listening()
-
-

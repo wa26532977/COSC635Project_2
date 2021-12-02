@@ -5,8 +5,12 @@ import sys
 import math
 import pickle
 
-
+'''
+Class ClientServer
+GBN Protocol
+'''
 class ClientServer:
+    #Constructor
     def __init__(self, pock_lost, all_massage, win_size, addr, port):
         self.pocket_lost = pock_lost
         self.window_size = int(win_size)
@@ -21,6 +25,9 @@ class ClientServer:
         self.pack_number = ''
         self.connection_fail = 0
 
+    '''
+    Generates a random number and compares it to user input random number
+    '''
     def pocket_sent(self):
         random_number = randrange(99)
         print(f"random number: {self.pocket_lost} and random number is {random_number}")
@@ -119,6 +126,9 @@ class ClientServer:
     #     print(f"connection fail {self.connection_fail}")
     #     self.client_sent(msg, good_pack_number)
 
+    '''
+    Closes the socket
+    '''
     def close_socket(self):
         self.client_socket.close()
 
@@ -161,11 +171,9 @@ if __name__ == '__main__':
 
     # client_1.close_socket()
     total_time_end = time.time()
-    print("Summery:")
+    print("Summary:")
     print(f"Total package: {total_pack}")
-    print(f"Package Lost rate: {pocket_lost}%")
-    print(f"The pack was lost: {client_1.connection_fail - 1} times .")
-    print(f"Each package size: {pack_size} bytes")
+    print(f"Package Loss rate: {pocket_lost}%")
+    print(f"A package was lost: {client_1.connection_fail - 1} times .")
+    print(f"Package size: {pack_size} bytes")
     print(f"Total time used: {total_time_end-total_time_start} seconds")
-
-
