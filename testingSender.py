@@ -3,12 +3,19 @@ import sys
 import math
 import socket
 import pickle
+import random
+from datetime import datetime
+random.seed(None)
+print(random.randrange(99))
 
+
+
+
+
+# d = {1: "hey", 2: "there"}
+# msg = pickle.dumps(d)
+# print(msg)
 '''
-d = {1: "hey", 2: "there"}
-msg = pickle.dumps(d)
-print(msg)
-
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.settimeout(0.5)
 
@@ -18,8 +25,8 @@ while True:
     data, addr = s.recvfrom(5000)
     print(str(data))
 '''
-
-print(socket.gethostbyname(socket.gethostname()))
+#
+# print(socket.gethostbyname(socket.gethostname()))
 
 
 

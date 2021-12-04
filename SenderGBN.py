@@ -1,6 +1,7 @@
 import socket
 import time
-from random import randrange
+import random
+# from random import randrange
 import sys
 import math
 import pickle
@@ -22,7 +23,8 @@ class ClientServer:
         self.connection_fail = 0
 
     def pocket_sent(self):
-        random_number = randrange(99)
+        random.seed(None)
+        random_number = random.randrange(99)
         print(f"random number: {self.pocket_lost} and random number is {random_number}")
         if random_number > int(self.pocket_lost):
             print("pocket_send")
@@ -87,37 +89,6 @@ class ClientServer:
         print(f"ack list: {self.ack_list}")
         self.check_group_response()
         # all package send
-
-    # def client_sent(self, msg, good_pack_number):
-    #     random_number = randrange(99)
-    #     print(f"pocket_lost: {self.pocket_lost} and random number is {random_number}")
-    #     print(random_number)
-    #     # create fake pack lost
-    #     if random_number > int(self.pocket_lost):
-    #         self.client_socket.sendto(msg, (self.addr, self.port))
-    #
-    #     start_timer = time.time()
-    #     # wait for receiver ack
-    #     while time.time() - start_timer < 3:
-    #         try:
-    #             print(time.time() - start_timer)
-    #             data, addr = self.client_socket.recvfrom(4096)
-    #             print(f'Server Says: {str(data)}')
-    #             self.pack_number = data.decode('UTF-8')
-    #             # matching pack number
-    #             if good_pack_number != self.pack_number:
-    #                 self.client_sent(msg, good_pack_number)
-    #
-    #             print("return reached")
-    #             return
-    #         except:
-    #             time.sleep(0.5)
-    #             print("waiting....")
-    #
-    #     print("bad connection")
-    #     self.connection_fail += 1
-    #     print(f"connection fail {self.connection_fail}")
-    #     self.client_sent(msg, good_pack_number)
 
     def close_socket(self):
         self.client_socket.close()
