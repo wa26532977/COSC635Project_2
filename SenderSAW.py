@@ -5,10 +5,11 @@ import sys
 import math
 import pickle
 
-
+#Create the Client Server Class to set sender parameters and methods
 class ClientServer:
+    #Initialize method for Sender SAW and variables
     def __init__(self, pock_lost, addr, port):
-        self.pocket_lost = pock_lost
+        self.pocket_lost = pock_lost #Should this be packet_lost?
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         # self.msg = msg.encode('UTF-8')
         self.client_socket.settimeout(0.5)

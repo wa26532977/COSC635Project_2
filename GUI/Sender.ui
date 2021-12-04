@@ -60,6 +60,9 @@
        <property name="text">
         <string>3000</string>
        </property>
+       <property name="readOnly">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
     </layout>

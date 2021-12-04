@@ -1,13 +1,16 @@
 import socket
 import time
-import random
-# from random import randrange
+from random import randrange
 import sys
 import math
 import pickle
 
-
+'''
+Class ClientServer
+GBN Protocol
+'''
 class ClientServer:
+    #Constructor
     def __init__(self, pock_lost, all_massage, win_size, addr, port):
         self.pocket_lost = pock_lost
         self.window_size = int(win_size)
@@ -22,9 +25,11 @@ class ClientServer:
         self.pack_number = ''
         self.connection_fail = 0
 
+    '''
+    Generates a random number and compares it to user input random number
+    '''
     def pocket_sent(self):
-        random.seed(None)
-        random_number = random.randrange(99)
+        random_number = randrange(99)
         print(f"random number: {self.pocket_lost} and random number is {random_number}")
         if random_number > int(self.pocket_lost):
             print("pocket_send")
@@ -90,6 +95,40 @@ class ClientServer:
         self.check_group_response()
         # all package send
 
+    # def client_sent(self, msg, good_pack_number):
+    #     random_number = randrange(99)
+    #     print(f"pocket_lost: {self.pocket_lost} and random number is {random_number}")
+    #     print(random_number)
+    #     # create fake pack lost
+    #     if random_number > int(self.pocket_lost):
+    #         self.client_socket.sendto(msg, (self.addr, self.port))
+    #
+    #     start_timer = time.time()
+    #     # wait for receiver ack
+    #     while time.time() - start_timer < 3:
+    #         try:
+    #             print(time.time() - start_timer)
+    #             data, addr = self.client_socket.recvfrom(4096)
+    #             print(f'Server Says: {str(data)}')
+    #             self.pack_number = data.decode('UTF-8')
+    #             # matching pack number
+    #             if good_pack_number != self.pack_number:
+    #                 self.client_sent(msg, good_pack_number)
+    #
+    #             print("return reached")
+    #             return
+    #         except:
+    #             time.sleep(0.5)
+    #             print("waiting....")
+    #
+    #     print("bad connection")
+    #     self.connection_fail += 1
+    #     print(f"connection fail {self.connection_fail}")
+    #     self.client_sent(msg, good_pack_number)
+
+    '''
+    Closes the socket
+    '''
     def close_socket(self):
         self.client_socket.close()
 
@@ -115,13 +154,13 @@ if __name__ == '__main__':
     all_msg = []
     # making all the data package along with part number and total pack number
     with open("COSC635_P2_DataSent.txt", "r", encoding="utf8") as in_file:
-        bytes = in_file.read(pack_size)  # read 3000 bytes
+        bytes = in_file.read(pack_size)  # read 5000 bytes
         while bytes:
             # print({"part": i, "total_pack": total_pack})
             msg_pickle = pickle.dumps({"part": i, "total_pack": total_pack, "msg": bytes})
             # client_1.client_sent(msg_pickle, f"part: {i}")
             # total_pack_lost += client_1.connection_fail
-            bytes = in_file.read(pack_size)  # read another 3000 bytes
+            bytes = in_file.read(pack_size)  # read another 5000 bytes
             all_msg.append(msg_pickle)
             i += 1
     # initialize the connection
@@ -132,11 +171,9 @@ if __name__ == '__main__':
 
     # client_1.close_socket()
     total_time_end = time.time()
-    print("Summery:")
+    print("Summary:")
     print(f"Total package: {total_pack}")
-    print(f"Package Lost rate: {pocket_lost}%")
-    print(f"The pack was lost: {client_1.connection_fail - 1} times .")
-    print(f"Each package size: {pack_size} bytes")
+    print(f"Package Loss rate: {pocket_lost}%")
+    print(f"A package was lost: {client_1.connection_fail - 1} times .")
+    print(f"Package size: {pack_size} bytes")
     print(f"Total time used: {total_time_end-total_time_start} seconds")
-
-
